@@ -114,4 +114,4 @@ SPRING MVC - TILES INTEGRATION in Spring Tool Suite
 
 	Note: the return "index" means that it will look to tiles.xml with definition name="index" ;
 
-21.) Analyze whatever the  i've typed above.
+21.) Analyze whatever  i've typed above.
