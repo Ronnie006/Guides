@@ -1,0 +1,24 @@
+EXPORT
+
+Go to View Certificate > Details 
+Copy to file..
+Base 64
+Enter save directory 
+
+
+IMPORT
+open cmd
+
+keytool -import -file <cert file> -keystore D:\<jdk directory>\jre\lib\security\cacerts
+
+Example:
+D:\ronnieSalvation\files>keytool -import -file stg.cer -keystore D:\sandbox\tools\jdk1.7.0_091\jre\lib\security\cacerts
+
+keystore password: changeit
+
+
+if this Error exists,
+(Error Importing Root Certificate: Certificate not imported, alias already exists)
+
+do this: 
+keytool -import -v -trustcacerts -alias tomcat -file stg_infocast.cer -keystore D:\sandbox\tools\jdk1.7.0_091\jre\lib\security\cacerts

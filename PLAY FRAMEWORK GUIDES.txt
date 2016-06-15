@@ -1,0 +1,3 @@
+PLAY FRAMEWORK
+1. Kapag 2.3 ang version. activator ang gagamitin lagi. Ex. To import to eclipse "activator eclipse"
+2. Kapag less 2.3 ang version play ang gagamiting. Ex. To import to eclipse "play eclipse"

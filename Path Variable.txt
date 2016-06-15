@@ -1,0 +1,23 @@
+Path Variable
+
+Right Click This Computer > Advanced System Setting > Environment Variables 
+
+On the System Variables Search for "PATH" in Variables Column then click its Value. 
+
+Add the new path Ex. (D:\sandbox\tools\jdk1.7.0_091;C:\NEW_PATH;)
+
+Create Custom Variable.
+
+On the System Variables, click new and add the variable name with corresponding value.
+
+
+then add the variable name to the PATH 
+
+Ex. 
+Variable name = NEW_PATH
+Value = C:\NEW_PATH;
+
+(D:\sandbox\tools\jdk1.7.0_091;%NEW_PATH%)
+This is equal to (D:\sandbox\tools\jdk1.7.0_091;C:\NEW_PATH;)
+
+PS. the added variable value should have .bat file in its directory.

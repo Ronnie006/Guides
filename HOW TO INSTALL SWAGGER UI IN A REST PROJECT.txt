@@ -1,0 +1,12 @@
+HOW TO INSTALL SWAGGER UI IN A REST PROJECT
+
+BOWER
+API DOCS DIRECTORY
+SWAGGER CONFIG JAVA FILE
+WEBCONFIG
+
+
+1. Add "swagger-ui": "2.1.3" in bower json dependency 
+2. Copy the Api Docs Directory in root
+3. Make a SwaggerConfig.java
+4. add "registry.addViewController("/api-docs").setViewName("forward:/api-docs/index.html");" in WevbConfig.java

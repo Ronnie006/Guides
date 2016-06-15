@@ -1,0 +1,5 @@
+Change a java version with batch file.
+
+Create a batch file and pattern the command below
+
+setx -m JAVA_HOME "D:\sandbox\tools\jdk1.8.0_73"

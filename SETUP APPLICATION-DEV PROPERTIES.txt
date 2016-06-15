@@ -1,0 +1,6 @@
+SETUP application-dev.properties
+
+Right-click project > Run As > Run Configurations > Select the project to be set.
+Click the Profile drop-down 
+Select dev
+
