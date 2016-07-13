@@ -1,0 +1,43 @@
+MAVEN SETTINGS
+
+On Eclipse
+Window > Preferences 
+
+On the left,
+Click Maven > User Settings
+Find the settings.xml for User Settings.
+
+Change the proxies
+
+Ex
+<proxies>
+    <!-- proxy
+     | Specification for one proxy, to be used in connecting to the network.
+     |-->
+    <proxy>
+      <id>optional</id>
+      <active>true</active>
+      <protocol>http</protocol>
+	  <username>rcang1</username>
+	  <password>laplace@may2016</password>
+	  <host>wsv10kb-wcg.smart.local</host>
+	  <port>80</port>
+<!--       <username>proxyuser</username> -->
+<!-- 	  <password>proxypass</password> -->
+<!-- 	  <host>10.128.51.104</host> -->
+<!-- 	  <port>1154</port> -->
+      <nonProxyHosts>local.net|some.host.com</nonProxyHosts>
+    </proxy>
+  </proxies>
+
+Save.
+
+update project or maven install.
+
+If this does not work.
+Check
+Window > Preferences 
+
+On the left side,
+click Maven > Installations
+click Add select the location of your maven directory

@@ -1,0 +1,190 @@
+SPRING DATA NEO4J INTEGRATION
+
+1. Configuration
+
+	A. Add this dependencies in pom.xml
+
+		<!-- Neo4j -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-neo4j</artifactId>
+			<version>4.1.0.RELEASE</version>
+		</dependency>
+
+		<!-- Neo4j OGM Drivers -->
+		<dependency>
+			<groupId>org.neo4j</groupId>
+			<artifactId>neo4j-ogm-embedded-driver</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.neo4j</groupId>
+			<artifactId>neo4j-ogm-http-driver</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		
+		<!-- Neo4j OGM API -->
+		<dependency>
+			<groupId>org.neo4j</groupId>
+			<artifactId>neo4j-ogm-api</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+
+		<!-- Parboiled Core -->
+		<dependency>
+			<groupId>org.parboiled</groupId>
+			<artifactId>parboiled-core</artifactId>
+			<version>1.1.4</version>
+		</dependency>
+
+	B. Create a ApplicationConfig class
+
+		import org.neo4j.ogm.session.Session;
+		import org.neo4j.ogm.session.SessionFactory;
+		import org.springframework.context.annotation.Bean;
+		import org.springframework.context.annotation.Configuration;
+		import org.springframework.context.annotation.Scope;
+		import org.springframework.context.annotation.ScopedProxyMode;
+		import org.springframework.data.neo4j.config.Neo4jConfiguration;
+		import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
+		import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+		@Configuration
+		@EnableNeo4jRepositories(basePackages = "test.repository")
+		@EnableTransactionManagement
+		public class ApplicationConfig extends Neo4jConfiguration {
+			@Bean
+		    public SessionFactory getSessionFactory() {
+		        // with domain entity base package(s)
+		        return new SessionFactory("test.model");
+		    }
+
+		    // needed for session in view in web-applications
+		    @Bean
+		    @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+		    public Session getSession() throws Exception {
+		        return super.getSession();
+		    }
+
+		}
+
+	C. Create an "ogm.properties" file containing below.
+		#Template
+
+		#driver=org.neo4j.ogm.drivers.<driverType>.driver.<driverType>
+		#URI=http://<username>:<password>@localhost:7474
+		#NOTE: driverType = "HttpDriver" or "EmbeddedDriver"
+
+		#For Http Driver
+		#driver=org.neo4j.ogm.drivers.http.driver.HttpDriver
+		#URI=http://neo4j:laplace06@localhost:7474
+
+		#For EmbeddedDriver
+		driver=org.neo4j.ogm.drivers.embedded.driver.EmbeddedDriver
+		URI=C:/Users/RCANG1/Documents/Neo4j/default.graphdb
+
+
+2. Create repository interface
+
+	package test.repository;
+
+	import org.springframework.data.neo4j.repository.GraphRepository;
+	import org.springframework.stereotype.Repository;
+
+	import test.model.Movie;
+
+	@Repository
+	public interface MovieRepository extends GraphRepository<Movie> {
+
+	}
+
+
+3. Create a models
+
+	package test.model;
+
+	import org.neo4j.ogm.annotation.GraphId;
+	import org.neo4j.ogm.annotation.NodeEntity;
+
+	@NodeEntity(label="Movie")
+	public class Movie {
+		@GraphId
+		Long id;
+		
+		String tagline;
+		String title;
+		int released;
+		public Long getId() {
+			return id;
+		}
+		public void setId(Long id) {
+			this.id = id;
+		}
+		public String getTagline() {
+			return tagline;
+		}
+		public void setTagline(String tagline) {
+			this.tagline = tagline;
+		}
+		public String getTitle() {
+			return title;
+		}
+		public void setTitle(String title) {
+			this.title = title;
+		}
+		public int getReleased() {
+			return released;
+		}
+		public void setReleased(int released) {
+			this.released = released;
+		}
+		@Override
+		public String toString() {
+			return "Movie [" + (id != null ? "id=" + id + ", " : "") + (tagline != null ? "tagline=" + tagline + ", " : "")
+					+ (title != null ? "title=" + title + ", " : "") + "released=" + released + "]";
+		}
+		
+	}
+
+
+4. Create Service
+	package test.web.rest;
+
+	import org.slf4j.Logger;
+	import org.slf4j.LoggerFactory;
+	import org.springframework.beans.factory.annotation.Autowired;
+	import org.springframework.http.HttpStatus;
+	import org.springframework.http.ResponseEntity;
+	import org.springframework.web.bind.annotation.RequestBody;
+	import org.springframework.web.bind.annotation.RequestMapping;
+	import org.springframework.web.bind.annotation.RequestMethod;
+	import org.springframework.web.bind.annotation.RestController;
+
+	import test.model.Movie;
+	import test.repository.MovieRepository;
+
+	@RestController
+	@RequestMapping("/api")
+	public class MovieResource {
+		
+		private static final Logger log = LoggerFactory.getLogger(MovieResource.class);
+		
+		@Autowired
+		MovieRepository movieRepository;
+		
+		@RequestMapping(value="/movie", method=RequestMethod.POST)
+		public void saveMovie(@RequestBody Movie movie){
+			log.info("REQUEST: " + movie);
+			movieRepository.save(movie);
+			log.info("|SAVED|" + movie);
+		}
+		
+		@RequestMapping(value="/movie", method=RequestMethod.GET)
+		public ResponseEntity<Iterable<Movie>> getMovies(){
+			Iterable<Movie> movies = movieRepository.findAll();
+			return new ResponseEntity<Iterable<Movie>>(movies,HttpStatus.OK);
+		}
+	}
+
+			

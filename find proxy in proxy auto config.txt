@@ -1,0 +1,2 @@
+open cmd type netstat -an | find "EST"
+check the ips in the middle.those are the potential proxy ips
