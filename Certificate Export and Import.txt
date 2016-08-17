@@ -22,3 +22,15 @@ if this Error exists,
 
 do this: 
 keytool -import -v -trustcacerts -alias tomcat -file stg_infocast.cer -keystore D:\sandbox\tools\jdk1.7.0_091\jre\lib\security\cacerts
+
+
+Delete alias in keystore
+keytool -delete -alias ureg -keystore D:/sandbox/tools/jdk1.8.0_73/jre/lib/security/cacerts -storepass changeit .
+
+
+If the certificate is still not recognized,
+
+A. Check host file if the domain name is registered together with the corresponding ip located below
+C:\Windows\System32\drivers\etc
+
+B. Check the target JVM/jdk in the console and in the PATH in environment variables
