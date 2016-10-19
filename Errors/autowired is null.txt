@@ -1,0 +1,13 @@
+
+Ex.
+
+@Service
+public class MyServiceImpl implements MyService {
+
+    @Autowired
+    public SOAPConfiguration soapConfiguration; // this becomes null
+
+}
+
+Answer:
+http://stackoverflow.com/questions/26461697/spring-boot-autowired-null

@@ -1,0 +1,11 @@
+Playframework
+
+java.lang.UnsupportedClassVersionError: rest/AccessController : Unsupported major.minor version 51.0
+
+error kahit na nakacompile na sa jdk 1.6 sa local at jdk 1.6 rin ung java sa server
+
+lagyan lang ng "java.source=1.6" sa application.conf
+
+
+Source:
+http://stackoverflow.com/questions/9904885/play-framework-how-to-fix-unsupportedclassversionerror-on-jre-6
